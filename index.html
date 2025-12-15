@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Anh yêu Mai Phương 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      :root {
+        --rosewater: #f5e0dc;
+        --flamingo: #f2cdcd;
+        --pink: #f5c2e7;
+        --mauve: #cba6f7;
+        --peach: #fab387;
+        --text: #4c4f69;
+        --base: #eff1f5;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, sans-serif;
+      }
+
+      body {
+        height: 100vh;
+        background: radial-gradient(
+          circle at top,
+          var(--rosewater),
+          var(--base)
+        );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .container {
+        text-align: center;
+        z-index: 10;
+      }
+
+      .love-text {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        font-weight: 800;
+        letter-spacing: 2px;
+        background: linear-gradient(
+          270deg,
+          var(--pink),
+          var(--mauve),
+          var(--peach),
+          var(--pink)
+        );
+        background-size: 600% 600%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation:
+          gradientFlow 8s ease infinite,
+          breathe 3.5s ease-in-out infinite;
+        text-shadow:
+          0 0 15px rgba(245, 194, 231, 0.6),
+          0 0 35px rgba(203, 166, 247, 0.4);
+      }
+
+      .anniversary {
+        margin-top: 18px;
+        font-size: 1.1rem;
+        color: var(--text);
+        opacity: 0.85;
+      }
+
+      .timer {
+        margin-top: 6px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--mauve);
+      }
+
+      @keyframes gradientFlow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes breathe {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      /* ===== Hearts ===== */
+      .heart {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: var(--pink);
+        transform: rotate(45deg);
+        opacity: 0.8;
+        animation: floatUp linear forwards;
+      }
+
+      .heart::before,
+      .heart::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: inherit;
+        border-radius: 50%;
+      }
+
+      .heart::before {
+        top: -8px;
+        left: 0;
+      }
+
+      .heart::after {
+        left: -8px;
+        top: 0;
+      }
+
+      @keyframes floatUp {
+        from {
+          transform: translateY(0) rotate(45deg);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(-120vh) rotate(45deg);
+          opacity: 0;
+        }
+      }
+
+      /* ===== Explosion ===== */
+      .explode {
+        animation: explode 700ms ease-out forwards;
+      }
+
+      @keyframes explode {
+        from {
+          transform: scale(1) rotate(45deg);
+          opacity: 1;
+        }
+        to {
+          transform: scale(3) rotate(45deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="love-text">Anh yêu Mai Phương</div>
+      <div class="anniversary">💗 Kỷ niệm: 22/11/2025 – 21:00</div>
+      <div class="timer" id="timer"></div>
+    </div>
+
+    <script>
+      const colors = ["#f5c2e7", "#f2cdcd", "#cba6f7", "#fab387"];
+
+      /* Floating hearts */
+      function createHeart(
+        x = Math.random() * window.innerWidth,
+        y = window.innerHeight,
+      ) {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+
+        const size = Math.random() * 14 + 10;
+        heart.style.width = heart.style.height = size + "px";
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
+        heart.style.background =
+          colors[Math.floor(Math.random() * colors.length)];
+        heart.style.animationDuration = Math.random() * 6 + 6 + "s";
+
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 12000);
+      }
+
+      setInterval(() => createHeart(), 350);
+
+      /* Click explosion */
+      document.addEventListener("click", (e) => {
+        for (let i = 0; i < 16; i++) {
+          const heart = document.createElement("div");
+          heart.className = "heart explode";
+
+          const size = Math.random() * 12 + 8;
+          heart.style.width = heart.style.height = size + "px";
+          heart.style.left = e.clientX + "px";
+          heart.style.top = e.clientY + "px";
+          heart.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 700);
+        }
+      });
+
+      /* Timer */
+      const startDate = new Date("2025-11-22T21:00:00");
+
+      function updateTimer() {
+        const now = new Date();
+        const diff = now - startDate;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("timer").textContent =
+          `⏳ Đã bên nhau ${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây`;
+      }
+
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    </script>
+  </body>
+</html>
